@@ -1,17 +1,11 @@
 <?php
 
-// DB情報
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'rydberg');
-define('DB_USER', 'rydberg');
-define('DB_PASS', 'v8kYAbpAYPJz');
-
 // DB接続
 try {
 	$dbh = new PDO(
-		'mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',
-		DB_USER,
-		DB_PASS,
+		'mysql:host='.$_ENV['DB_HOST'].';dbname='.$_ENV['DB_NAME'].';charset=utf8',
+		$_ENV['DB_USER'],
+		$_ENV['DB_PASS'],
 		array(PDO::ATTR_EMULATE_PREPARES => false)
 	);
 } catch (PDOException $e) {
