@@ -10,11 +10,13 @@ services:
       - node
       - app
     restart: always
+    container_name: nginx
   node:
     build: node
     volumes:
-      - .:/home/app/node
+      - ../:/home/app/node
       - /home/app/node/node_modules
+    container_name: node
   app:
     build: php-fpm
     links:
@@ -28,11 +30,13 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
     volumes:
-      - ./src:/var/www/html
+      - ../src:/var/www/html
+    container_name: app
   data:
     image: busybox
     volumes:
       - ./misc/data:/var/lib/mysql
+    container_name: data
   mysql:
     build: mysql
     environment:
@@ -44,7 +48,9 @@ services:
       - "13306:3306"
     volumes_from:
       - data
+    container_name: mysql
   redis:
     build: redis
     links:
       - node
+    container_name: redis
