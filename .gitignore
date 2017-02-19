@@ -1,1 +1,3 @@
 docker/misc/data/*
+
+!.gitkeep
