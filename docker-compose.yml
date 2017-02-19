@@ -8,6 +8,7 @@ services:
       - '443:443'
     links:
       - chat
+      - app
     restart: always
     environment:
       DOMAINS: 'nodetest.com -> http://chat:3000'
@@ -18,3 +19,7 @@ services:
     volumes:
       - .:/home/app/chat
       - /home/app/chat/node_modules
+  app:
+    build: php-fpm
+    volumes:
+      - ./src:/var/www/html
