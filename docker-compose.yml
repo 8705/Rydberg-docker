@@ -7,18 +7,14 @@ services:
       - '80:80'
       - '443:443'
     links:
-      - chat
+      - node
       - app
     restart: always
-    environment:
-      DOMAINS: 'nodetest.com -> http://chat:3000'
-      STAGE: local
-      # FORCE_RENEW: 'true'
-  chat:
+  node:
     build: node
     volumes:
-      - .:/home/app/chat
-      - /home/app/chat/node_modules
+      - .:/home/app/node
+      - /home/app/node/node_modules
   app:
     build: php-fpm
     links:
@@ -51,4 +47,4 @@ services:
   redis:
     build: redis
     links:
-      - chat
+      - node
