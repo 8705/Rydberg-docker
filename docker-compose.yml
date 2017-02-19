@@ -16,6 +16,11 @@ services:
       # FORCE_RENEW: 'true'
   chat:
     build: node
+    links:
+      - redis
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     volumes:
       - .:/home/app/chat
       - /home/app/chat/node_modules
