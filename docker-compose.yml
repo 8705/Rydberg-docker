@@ -25,10 +25,10 @@ services:
       - mysql
       - redis
     environment:
-      DB_HOST: 'mysql'
-      DB_NAME: 'rydberg'
-      DB_USER: 'rydberg'
-      DB_PASS: 'v8kYAbpAYPJz'
+      DB_HOST: mysql
+      DB_NAME: rydberg
+      DB_USER: rydberg
+      DB_PASS: v8kYAbpAYPJz
     volumes:
       - ./src:/var/www/html
   data:
