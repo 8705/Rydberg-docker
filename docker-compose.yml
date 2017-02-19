@@ -1,21 +1,20 @@
-https-portal:
-  image: steveltn/https-portal:1.0.0
-  ports:
-    # - '80:80'
-    - '443:443'
-  links:
-    - chat
-  restart: always
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock:ro
-  environment:
-    DOMAINS: 'nodetest.com -> http://chat:3000'
-    STAGE: local
-    # FORCE_RENEW: 'true'
-chat:
-  build: node
-  # ports:
-  #   - '3000:3000'
-  volumes:
-    - .:/home/app/chat
-    - /home/app/chat/node_modules
+version: '2'
+
+service:
+  nginx:
+    build: nginx
+    ports:
+      - '80:80'
+      - '443:443'
+    links:
+      - chat
+    restart: always
+    environment:
+      DOMAINS: 'nodetest.com -> http://chat:3000'
+      STAGE: local
+      # FORCE_RENEW: 'true'
+  chat:
+    build: node
+    volumes:
+      - .:/home/app/chat
+      - /home/app/chat/node_modules
