@@ -7,14 +7,20 @@ services:
       - '80:80'
       - '443:443'
     links:
-      - chat
+      # - chat
+      - php7
     restart: always
     environment:
-      DOMAINS: 'nodetest.com -> http://chat:3000'
+      # DOMAINS: 'nodetest.com -> http://chat:3000'
+      DOMAINS: 'nodetest2.com -> http://php7:9000'
       STAGE: local
       # FORCE_RENEW: 'true'
-  chat:
-    build: node
-    volumes:
-      - .:/home/app/chat
-      - /home/app/chat/node_modules
+  # chat:
+  #   build: node
+  #   volumes:
+  #     - .:/home/app/chat
+  #     - /home/app/chat/node_modules
+  php7:
+    build: ./php7
+    volumes: 
+      - .:/var/www/html/
