@@ -16,11 +16,6 @@ services:
       # FORCE_RENEW: 'true'
   chat:
     build: node
-    links:
-      - redis
-    environment:
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
     volumes:
       - .:/home/app/chat
       - /home/app/chat/node_modules
@@ -43,7 +38,7 @@ services:
     volumes:
       - ./misc/data:/var/lib/mysql
   mysql:
-    image: mysql:5.7
+    build: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: rydberg

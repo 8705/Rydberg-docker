@@ -17,7 +17,7 @@ try {
 	exit('データベース接続失敗。'.$e->getMessage());
 }
 
-$query = $dbh->prepare("INSERT INTO test (message) VALUES (?)");
+$query = $dbh->prepare("INSERT INTO messages (message) VALUES (?)");
 $query->execute([$message]);
 
 // redis post
