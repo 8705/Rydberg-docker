@@ -1,3 +1,6 @@
+<?php
+  $redis = new Redis();
+?>
 <!doctype html>
 <html>
   <head>
@@ -23,10 +26,27 @@
     <script>
       var socket = io();
       $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
-        $('#m').val('');
+        $.ajax({
+          type: 'POST',
+          url: '/message.php',
+          data:{
+            msg:$('#m').val()
+          },
+          dataType: 'json',
+        })
+        .done(function(data, status, jqXHR){
+          $('#m').val('');
+          console.log(data, status, jqXHR);
+        })
+        .fail(function(jqXHR, status, error){
+          console.log(jqXHR, status, error);
+        })
+        .always(function(jqXHR, status){
+          console.log(status);
+        });
         return false;
       });
+
       socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
       });
