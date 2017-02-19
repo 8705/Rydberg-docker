@@ -13,7 +13,7 @@ https-portal:
     STAGE: local
     # FORCE_RENEW: 'true'
 chat:
-  build: .
+  build: node
   # ports:
   #   - '3000:3000'
   volumes:
