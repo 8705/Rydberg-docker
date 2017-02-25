@@ -2,7 +2,7 @@ version: '2'
 
 services:
   nginx:
-    build: nginx
+    build: docker/nginx
     ports:
       - '80:80'
       - '443:443'
@@ -12,13 +12,16 @@ services:
     restart: always
     container_name: nginx
   node:
-    build: node
+    build: docker/node
     volumes:
-      - ../:/home/app/node
+      - ./applications/node:/home/app/node
       - /home/app/node/node_modules
+    command: ["npm", "install"]
+    command: ["npm", "cache", "clean"]
+    command: ["node", "index.js"]
     container_name: node
   app:
-    build: php-fpm
+    build: docker/php-fpm
     links:
       - mysql
       - redis
@@ -30,15 +33,15 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
     volumes:
-      - ../src:/var/www/html
+      - ./applications/public:/var/www/html/public
     container_name: app
   data:
     image: busybox
     volumes:
-      - ./misc/data:/var/lib/mysql
+      - ./docker/misc/data:/var/lib/mysql
     container_name: data
   mysql:
-    build: mysql
+    build: docker/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: rydberg
@@ -50,7 +53,7 @@ services:
       - data
     container_name: mysql
   redis:
-    build: redis
+    build: docker/redis
     links:
       - node
     container_name: redis
