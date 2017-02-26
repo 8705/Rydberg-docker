@@ -22,9 +22,7 @@ services:
     volumes:
       - ./applications/node:/home/app/node
       - /home/app/node/node_modules
-    command: ["npm", "install"]
-    command: ["npm", "cache", "clean"]
-    command: ["node", "index.js"]
+    command: bash -c "APP_HOME=/home/app && cd $$APP_HOME/node && npm install && npm cache clean && cd $$APP_HOME/node && node index.js"
     container_name: node
   app:
     build: docker/php-fpm
