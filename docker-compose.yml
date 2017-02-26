@@ -1,6 +1,12 @@
 version: '2'
 
 services:
+  composer:
+    build: docker/composer
+    volumes:
+      - ./applications/laravel:/home/app/laravel
+    command: ["composer", "install"]
+    container_name: composer
   nginx:
     build: docker/nginx
     ports:
